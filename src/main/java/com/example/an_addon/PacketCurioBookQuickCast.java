@@ -1,19 +1,13 @@
-package com.example.an_addon;
+package com.hathfury.ars_spell_book_curio;
 
 import com.hollingsworth.arsnouveau.api.spell.ISpellCaster;
 import com.hollingsworth.arsnouveau.api.item.ICasterTool;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
-import net.minecraft.world.level.Level;
-
-import java.util.function.Supplier;
-
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Entity;
+import java.util.function.Supplier;
 
 public class PacketCurioBookQuickCast {
     int slot;
@@ -34,15 +28,11 @@ public class PacketCurioBookQuickCast {
 
     public void handle(Supplier<NetworkEvent.Context> ctx){
         ctx.get().enqueueWork(() -> {
-            System.out.println("PacketCurioBookQuickCast: Handling packet");
             ServerPlayer player = ctx.get().getSender();
             if(player == null) return;
             ItemStack stack = CurioBookUtil.getCurioBookStack((LivingEntity)player);
             if(!stack.isEmpty()) {
                 CurioBookCaster caster = new CurioBookCaster(stack);
-                System.out.println("PacketCurioBookQuickCast: Casting spell " + caster.getSpell(slot).name + " from slot " + slot);
-                ISpellCaster casterTest = ((ICasterTool)stack.getItem()).getSpellCaster(stack);
-                System.out.println("PacketCurioBookQuickCast: Casting spell " + casterTest.getSpell(slot).name + " from slot " + slot);
                 caster.castCurioBookSpell(player.level(), (LivingEntity)player, null, caster.getSpell(slot));
             }
         });

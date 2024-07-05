@@ -1,12 +1,9 @@
-package com.example.an_addon;
+package com.hathfury.ars_spell_book_curio;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
-
 import java.util.Optional;
-import java.util.function.Supplier;
-
 import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;

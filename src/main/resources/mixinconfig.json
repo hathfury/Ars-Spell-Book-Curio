@@ -1,8 +1,8 @@
 {
     "required": true,
-    "package": "com.example.an_addon.mixin",
+    "package": "com.hathfury.ars_spell_book_curio.mixin",
     "compatibilityLevel": "JAVA_17",
-    "refmap": "an_addon.refmap.json",
+    "refmap": "ars_spell_book_curio.refmap.json",
     "client": [
       "KeyHandlerMixin"
     ],

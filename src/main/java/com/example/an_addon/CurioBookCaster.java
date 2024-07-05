@@ -1,17 +1,14 @@
-package com.example.an_addon;
+package com.hathfury.ars_spell_book_curio;
 
 import com.hollingsworth.arsnouveau.api.spell.Spell;
 import com.hollingsworth.arsnouveau.api.spell.SpellCaster;
 import com.hollingsworth.arsnouveau.api.spell.SpellResolver;
 import com.hollingsworth.arsnouveau.api.spell.SpellContext;
-
 import com.hollingsworth.arsnouveau.api.ANFakePlayer;
-import com.hollingsworth.arsnouveau.api.sound.ConfiguredSpellSound;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.IWrappedCaster;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.LivingCaster;
 import com.hollingsworth.arsnouveau.api.spell.wrapped_caster.PlayerCaster;
 import com.hollingsworth.arsnouveau.api.util.SpellUtil;
-import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.block.tile.ScribesTile;
 import com.hollingsworth.arsnouveau.common.datagen.BlockTagProvider;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
@@ -19,7 +16,6 @@ import com.hollingsworth.arsnouveau.common.util.PortUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -36,9 +32,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
-
 import javax.annotation.Nullable;
-
 
 public class CurioBookCaster extends SpellCaster {
     public CurioBookCaster(ItemStack stack) {
@@ -55,12 +49,10 @@ public class CurioBookCaster extends SpellCaster {
     }
 
     public InteractionResultHolder<ItemStack> castCurioBookSpell(Level worldIn, LivingEntity entity, @Nullable Component invalidMessage, @NotNull Spell spell) {
-        System.out.println("CurioBookCaster: castCurioBookSpell");
         ItemStack stack = CurioBookUtil.getCurioBookStack(entity);
 
         if (worldIn.isClientSide)
             return InteractionResultHolder.pass(stack);
-        System.out.println("CurioBookCaster: Casting spell " + spell.name);
         spell = modifySpellBeforeCasting(worldIn, entity, InteractionHand.MAIN_HAND, spell);
         if (!spell.isValid() && invalidMessage != null) {
             PortUtil.sendMessageNoSpam(entity, invalidMessage);
