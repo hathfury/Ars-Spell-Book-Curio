@@ -5,10 +5,12 @@ import com.hathfury.ars_spell_book_curio.PacketCurioBookQuickCast;
 import com.hathfury.ars_spell_book_curio.Networking;
 import com.hollingsworth.arsnouveau.client.registry.ModKeyBindings;
 import com.hollingsworth.arsnouveau.client.keybindings.KeyHandler;
+import com.hollingsworth.arsnouveau.api.util.StackUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -24,6 +26,9 @@ public abstract class KeyHandlerMixin {
         if(spellSlot == -1) return;
 
         Player player = Minecraft.getInstance().player;
+        InteractionHand hand = StackUtil.getBookHand(player);
+        if(hand != null) return; // Held spell books take priority if found
+
         ItemStack stack = CurioBookUtil.getCurioBookStack((LivingEntity)player);
         if(!stack.isEmpty()) {
             Networking.INSTANCE.sendToServer(new PacketCurioBookQuickCast(spellSlot));

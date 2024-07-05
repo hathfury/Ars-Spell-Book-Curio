@@ -1,17 +1,18 @@
 Changes:
-Intrinsic overwrite the public static void checkCasterKeys(int key) function from https://github.com/baileyholl/Ars-Nouveau/blob/main/src/main/java/com/hollingsworth/arsnouveau/client/keybindings/KeyHandler.java
+Intrinsic overwrite the public static void checkCasterKeys(int key) function from 
+https://github.com/baileyholl/Ars-Nouveau/blob/1.20/src/main/java/com/hollingsworth/arsnouveau/client/keybindings/KeyHandler.java
 Don't check for hand, check for curio slot is spellbook (and hotkeylistener?), check for usedQuickSlot, and call the PacketCurioQuickCast we created below
 
 Make a PacketCurioBookQuickCast modeled after below, but not checking hand, but instead item in curio spellbook slot
-https://github.com/baileyholl/Ars-Nouveau/blob/main/src/main/java/com/hollingsworth/arsnouveau/common/network/PacketQuickCast.java#L13
+https://github.com/baileyholl/Ars-Nouveau/blob/1.20/src/main/java/com/hollingsworth/arsnouveau/common/network/PacketQuickCast.java
 
 Add new function to ISpellHotkeyListener for onCurioBookQuickCast that doesn't check hand, but instead uses curio slot, have that call new castSpell function below
-https://github.com/baileyholl/Ars-Nouveau/blob/main/src/main/java/com/hollingsworth/arsnouveau/api/item/ISpellHotkeyListener.java#L24
+https://github.com/baileyholl/Ars-Nouveau/blob/1.20/src/main/java/com/hollingsworth/arsnouveau/api/item/ISpellHotkeyListener.java
 
 (do the below 2 items just implementing the interface - shouldn't take mixins since they're default implementations)
 Make a new iSpellCaster.castSpell that doesn't take hand as a parameter
 Overwrite the existing castSpell that takes hand to call my implementation after validating hand
-https://github.com/baileyholl/Ars-Nouveau/blob/main/src/main/java/com/hollingsworth/arsnouveau/api/spell/ISpellCaster.java#L136
+https://github.com/baileyholl/Ars-Nouveau/blob/1.20/src/main/java/com/hollingsworth/arsnouveau/api/spell/ISpellCaster.java#L136
 
 
 Also see https://github.com/Alexthw46/Ars-Elemental/blob/1.20.x/src/main/java/alexthw/ars_elemental/network/NetworkManager.java
