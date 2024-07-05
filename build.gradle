@@ -50,6 +50,9 @@ minecraft {
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            property 'mixin.debug.verbose', 'true'
+
+            arg "-mixin.config=mixinconfig.json"
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
@@ -68,6 +71,7 @@ minecraft {
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            arg "-mixin.config=mixinconfig.json"
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
@@ -166,6 +170,7 @@ jar {
                 "Implementation-Version": "${version}",
                 "Implementation-Vendor" :"examplemodsareus",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs": "mixinconfig.json"
         ])
     }
 }
@@ -189,6 +194,9 @@ publishing {
     }
 }
 
+mixin {
+    add sourceSets.main, "an_addon.refmap.json"
+}
 
 // Prevent Mixin annotation processor from getting into IDEA's annotation processor settings
 // Copied from Botania

@@ -1,6 +1,5 @@
 package com.example.an_addon;
 
-import com.example.an_addon.registry.ModRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -23,24 +22,20 @@ public class ExampleANAddon
 
     public ExampleANAddon() {
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
-        ModRegistry.registerRegistries(modbus);
-        ArsNouveauRegistry.registerGlyphs();
         modbus.addListener(this::setup);
         modbus.addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public static ResourceLocation prefix(String path){
+    public static ResourceLocation prefix(String path) {
         return new ResourceLocation(MODID, path);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
-        ArsNouveauRegistry.registerSounds();
+    private void setup(final FMLCommonSetupEvent event) {
+        Networking.registerMessages();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

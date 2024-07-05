@@ -1,0 +1,43 @@
+Changes:
+Intrinsic overwrite the public static void checkCasterKeys(int key) function from https://github.com/baileyholl/Ars-Nouveau/blob/main/src/main/java/com/hollingsworth/arsnouveau/client/keybindings/KeyHandler.java
+Don't check for hand, check for curio slot is spellbook (and hotkeylistener?), check for usedQuickSlot, and call the PacketCurioQuickCast we created below
+
+Make a PacketCurioBookQuickCast modeled after below, but not checking hand, but instead item in curio spellbook slot
+https://github.com/baileyholl/Ars-Nouveau/blob/main/src/main/java/com/hollingsworth/arsnouveau/common/network/PacketQuickCast.java#L13
+
+Add new function to ISpellHotkeyListener for onCurioBookQuickCast that doesn't check hand, but instead uses curio slot, have that call new castSpell function below
+https://github.com/baileyholl/Ars-Nouveau/blob/main/src/main/java/com/hollingsworth/arsnouveau/api/item/ISpellHotkeyListener.java#L24
+
+(do the below 2 items just implementing the interface - shouldn't take mixins since they're default implementations)
+Make a new iSpellCaster.castSpell that doesn't take hand as a parameter
+Overwrite the existing castSpell that takes hand to call my implementation after validating hand
+https://github.com/baileyholl/Ars-Nouveau/blob/main/src/main/java/com/hollingsworth/arsnouveau/api/spell/ISpellCaster.java#L136
+
+
+Also see https://github.com/Alexthw46/Ars-Elemental/blob/1.20.x/src/main/java/alexthw/ars_elemental/network/NetworkManager.java
+https://github.com/Alexthw46/Ars-Elemental/blob/1.20.x/src/main/java/alexthw/ars_elemental/network/OpenCurioBagPacket.java
+https://github.com/SpongePowered/Mixin/wiki/Introduction-to-Mixins---Overwriting-Methods
+
+
+
+Make a new Curio slot that only takes Spellbooks
+https://github.com/TheIllusiveC4/Curios/wiki/How-to-Use:-Users
+https://github.com/TheIllusiveC4/Curios/wiki/How-to-Use:-Developers
+https://github.com/TheIllusiveC4/Curios/blob/c349cc11dfed9e3bd01fcecf32389028cc265dcc/forge/src/main/java/top/theillusivec4/curios/api/type/inventory/ICurioStacksHandler.java#L40
+https://docs.illusivesoulworks.com/curios/slots/datapack-example
+Tags for spellbook: 
+ars_nouveau:novice_spell_book
+ars_nouveau:apprentice_spell_book
+ars_nouveau:archmage_spell_book
+ars_nouveau:creative_spell_book
+
+Other ref:
+https://mcstreetguy.github.io/ForgeJavaDocs/1.20.1-latest/net/minecraft/world/entity/Entity.html#level()
+C:\Users\hathf\.gradle\caches\modules-2\files-2.1\com.hollingsworth.ars_nouveau\ars_nouveau-1.20.1\4.7.4.112
+https://github.com/SpongePowered/Mixin/wiki/Introduction-to-Mixins---The-Mixin-Environment#mixin-configuration-files
+
+To build with gradle, jar located in ./build/libs:
+.\gradlew.bat build
+
+To test run:
+.\gradlew.bat runClient
